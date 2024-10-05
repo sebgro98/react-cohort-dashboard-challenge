@@ -5,6 +5,7 @@ import { useContext } from 'react';
 import { ContactContext } from '../../App';
 function LeftMenu() {
     const { contact } = useContext(ContactContext);
+  
     return (
         <div className="left-menu">
             <ul>
@@ -17,7 +18,7 @@ function LeftMenu() {
             </div>
             
             <div className="menu-item">
-            <Link to="/profile">
+            <Link to={`/profile/${contact.id}`}>
                 <img src={profile} alt="profile" style={{ height: '35px' , marginRight: '50px' }} />
                 </Link>
                 <span style={{ marginRight: '50px' }}>Profile</span>

@@ -2,8 +2,7 @@ import {Post} from "./Post";
 import { useContext } from "react";
 import { PostsContext } from "./PostFeed";
 function PostList() {
-  const { postsWithContacts, getInitials } = useContext(PostsContext);
-  console.log(postsWithContacts);
+  const { postsWithContacts } = useContext(PostsContext);
 
   return (
     <ul>
@@ -11,7 +10,7 @@ function PostList() {
         .slice()
         .reverse()
         .map((post, index) => (
-          <Post key={index} post={post} getInitials={getInitials} />
+          <Post key={index} post={post} />
         ))}
     </ul>
   );

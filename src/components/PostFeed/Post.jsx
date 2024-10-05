@@ -1,12 +1,14 @@
 import { useEffect, useState, createContext, useContext } from "react";
 import { Link } from "react-router-dom";
 import CommentList from "../CommentSection/CommentList";
+import { PostsContext } from "./PostFeed";
 const CommentContext = createContext();
 
-function Post({ post, getInitials }) {
+function Post({ post }) {
   const [commentsWithContacts, setCommentsWithContacts] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  const {getInitials} = useContext(PostsContext)
 
   const fetchCommentsWithContacts = async () => {
     try {
@@ -46,9 +48,13 @@ function Post({ post, getInitials }) {
             {getInitials(post.contact.firstName, post.contact.lastName)}
           </div>
           <div>
+          <Link to={`/profile/${post.contactId}`}>
             <h3 style={styles.contactName}>
+              
               {post.contact.firstName} {post.contact.lastName}
+              
             </h3>
+            </Link>
             <Link to={`/post/${post.id}`} state={{ post }}>
               <h4 style={styles.postTitle}>{post.title}</h4>
             </Link>

@@ -1,4 +1,4 @@
-import { createContext, useEffect, useState } from 'react';
+import { createContext, useEffect, useState, useCallback } from 'react';
 
 // Create context
 export const MyContext = createContext();
@@ -6,6 +6,7 @@ export const MyContext = createContext();
 function PostContextProvider({ children }) {
   const [postsWithContacts, setPostsWithContacts] = useState([]);
   const [commentsWithContacts, setCommentsWithContacts] = useState([]);
+  const [contactWithId, setContactWithId] = useState(null);
   const [loading, setLoading] = useState(true);
 
   const fetchPostsWithContacts = async () => {
@@ -32,6 +33,15 @@ function PostContextProvider({ children }) {
     }
   };
 
+  const fetchContactById = useCallback(async (id) => {
+    try {
+      const response = await fetch(`https://boolean-uk-api-server.fly.dev/sebgro98/contact/${id}`);
+      const data = await response.json();
+      setContactWithId(data);
+    } catch (error) {
+      console.error('Error fetching contact:', error);
+    }
+  }, []);
   const fetchCommentsWithContacts = async (postId) => {
     try {
       const commentResponse = await fetch(`https://boolean-uk-api-server.fly.dev/sebgro98/post/${postId}/comment`);
@@ -58,7 +68,8 @@ function PostContextProvider({ children }) {
   }, []);
 
   return (
-    <MyContext.Provider value={{ postsWithContacts, commentsWithContacts, fetchCommentsWithContacts, setPostsWithContacts }}>
+    <MyContext.Provider value={{ postsWithContacts, commentsWithContacts, fetchCommentsWithContacts,
+     setPostsWithContacts, contactWithId, fetchContactById, setContactWithId }}>
         {children}
     </MyContext.Provider>
   );

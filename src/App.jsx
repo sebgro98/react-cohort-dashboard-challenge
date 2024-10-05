@@ -5,6 +5,7 @@ import PostDetails from "./components/PostFeed/PostDetails";
 import Header from "./components/Header/Header";
 import LeftMenu from "./components/Header/LeftMenu";
 import PostContextProvider from './ContextProvider';
+import ProfilePage from "./components/Header/ProfilePage";
 import "./App.css";
 
 const ContactContext = createContext();
@@ -28,6 +29,8 @@ function App() {
     fetchContact();
   }, []);
 
+  if(contact)
+
   return (
     <PostContextProvider>
     <ContactContext.Provider value={{ contact }}>
@@ -41,6 +44,7 @@ function App() {
           </nav>
           <div className="main-content">
             <Routes>
+              <Route path="/profile/:contactId" element={<ProfilePage />} />
               <Route path="/" element={<PostFeed />} />
               <Route path="/post/:postId" element={<PostDetails />} />
             </Routes>
