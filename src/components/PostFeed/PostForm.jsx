@@ -1,9 +1,8 @@
 import { useState, useContext } from 'react';
-import { ContactContext } from '../../App';
 import {PostsContext} from "./PostFeed"
-
+import { MyContext } from '../../ApiProvider';
 function PostForm() {
-  const { contact } = useContext(ContactContext); 
+  const { contact, addPost } = useContext(MyContext); 
   
   const {handlePostSubmit, getInitials} = useContext(PostsContext)
   const [postContent, setPostContent] = useState('');
@@ -18,7 +17,7 @@ function PostForm() {
       contact: contact, 
     };
 
-    handlePostSubmit(newPost);
+    addPost(newPost);
 
     setPostContent('');
   };

@@ -1,9 +1,9 @@
 import { useContext } from 'react';
-import { ContactContext } from '../../App';
+import { MyContext } from '../../ApiProvider';
 import title from "../../assets/title-header.svg";
 
 function Header() {
-  const { contact } = useContext(ContactContext);
+  const { contact } = useContext(MyContext);
 
   
   const getInitials = (firstName, lastName) => {

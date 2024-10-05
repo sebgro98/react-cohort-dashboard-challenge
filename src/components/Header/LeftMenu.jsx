@@ -2,9 +2,9 @@ import home from "../../assets/home-icon.svg";
 import profile from "../../assets/profile-icon.svg"
 import { Link } from 'react-router-dom';
 import { useContext } from 'react';
-import { ContactContext } from '../../App';
+import { MyContext } from "../../ApiProvider";
 function LeftMenu() {
-    const { contact } = useContext(ContactContext);
+    const { contact } = useContext(MyContext);
   
     return (
         <div className="left-menu">

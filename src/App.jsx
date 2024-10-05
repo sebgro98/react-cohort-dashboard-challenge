@@ -4,36 +4,18 @@ import { PostFeed } from "./components/PostFeed/PostFeed";
 import PostDetails from "./components/PostFeed/PostDetails";
 import Header from "./components/Header/Header";
 import LeftMenu from "./components/Header/LeftMenu";
-import PostContextProvider from './ContextProvider';
+import ContextProvider from './ApiProvider';
 import ProfilePage from "./components/Header/ProfilePage";
 import "./App.css";
 
 const ContactContext = createContext();
 
 function App() {
-  const [contact, setContact] = useState(null);
+  
 
-  useEffect(() => {
-    const fetchContact = async () => {
-      try {
-        const response = await fetch(
-          "https://boolean-uk-api-server.fly.dev/sebgro98/contact/1"
-        );
-        const contactData = await response.json();
-        setContact(contactData);
-      } catch (error) {
-        console.error("Error fetching contact:", error);
-      }
-    };
-
-    fetchContact();
-  }, []);
-
-  if(contact)
 
   return (
-    <PostContextProvider>
-    <ContactContext.Provider value={{ contact }}>
+    <ContextProvider>
       <div className="app">
         <header>
           <Header />
@@ -51,8 +33,7 @@ function App() {
           </div>
         </div>
       </div>
-    </ContactContext.Provider>
-    </PostContextProvider>
+    </ContextProvider>
   );
 }
 

@@ -1,6 +1,7 @@
 import { CommentContext } from "../PostFeed/Post";
 import { useContext, useState } from "react";
 import CommentSection from "./CommentSection";
+
 function CommentList() {
   const { commentsWithContacts, getInitials } = useContext(CommentContext);
 
@@ -15,6 +16,11 @@ function CommentList() {
       <h5>Comments:</h5>
       {commentsWithContacts.length > 0 ? (
         <div style={styles.commentsContainer}>
+           {commentsWithContacts.length > 3 && (
+        <button onClick={handleToggleComments} style={styles.toggleButton}>
+          {showAllComments ? 'Hide comments' : 'See previous comments'}
+        </button>
+      )}
           {showAllComments
             ? commentsWithContacts.map((comment) => (
                 <CommentSection
@@ -34,11 +40,7 @@ function CommentList() {
       ) : (
         <p>No comments yet.</p>
       )}
-      {commentsWithContacts.length > 3 && (
-        <button onClick={handleToggleComments} style={styles.toggleButton}>
-          {showAllComments ? 'Hide comments' : 'See previous comments'}
-        </button>
-      )}
+     
     </>
   );
 }

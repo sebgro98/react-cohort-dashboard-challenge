@@ -1,5 +1,9 @@
-import CommentForm from "./CommentForm";
-function CommentSection({ comment, getInitials }) {
+import { PostsContext } from "../PostFeed/PostFeed";
+import { useContext } from "react";
+function CommentSection({ comment }) {
+
+  const {getInitials} = useContext(PostsContext)
+
   return (
     <div style={styles.commentBox}>
       <div style={styles.initialsCircle}>
@@ -13,7 +17,6 @@ function CommentSection({ comment, getInitials }) {
         </p>
         <p>{comment.content}</p>
       </div>
-      <CommentForm />
     </div>
   );
 }

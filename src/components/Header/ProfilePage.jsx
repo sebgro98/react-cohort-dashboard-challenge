@@ -1,6 +1,6 @@
 import { useState, useContext, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { MyContext } from "../../ContextProvider";
+import { MyContext } from "../../ApiProvider";
 function ProfilePage() {
   const { contactId } = useParams();
   const { contactWithId, fetchContactById, setContactWithId } =
@@ -97,7 +97,7 @@ function ProfilePage() {
     <div style={styles.container}>
       <h2 style={styles.header}>Profile</h2>
       <form onSubmit={handleSubmit} style={styles.form}>
-        
+
         {/* Account Information Section */}
         <div style={styles.section}>
           <h3 style={styles.sectionHeader}>Account Information</h3>

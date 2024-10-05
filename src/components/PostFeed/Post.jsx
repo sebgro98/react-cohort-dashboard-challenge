@@ -2,46 +2,26 @@ import { useEffect, useState, createContext, useContext } from "react";
 import { Link } from "react-router-dom";
 import CommentList from "../CommentSection/CommentList";
 import { PostsContext } from "./PostFeed";
+import CommentForm from "../CommentSection/CommentForm";
 const CommentContext = createContext();
 
 function Post({ post }) {
   const [commentsWithContacts, setCommentsWithContacts] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  const {getInitials} = useContext(PostsContext)
-
-  const fetchCommentsWithContacts = async () => {
-    try {
-      const commentsResponse = await fetch(
-        `https://boolean-uk-api-server.fly.dev/sebgro98/post/${post.id}/comment`
-      );
-      const comments = await commentsResponse.json();
-
-      const contactPromises = comments.map(async (comment) => {
-        const contactResponse = await fetch(
-          `https://boolean-uk-api-server.fly.dev/sebgro98/contact/${comment.contactId}`
-        );
-        const contact = await contactResponse.json();
-        return { ...comment, contact };
-      });
-
-      const commentsWithContacts = await Promise.all(contactPromises);
-      setCommentsWithContacts(commentsWithContacts);
-    } catch (error) {
-      console.error("Error fetching comments or contacts:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
+  const {getInitials, fetchCommentsWithContacts} = useContext(PostsContext)
+  
   useEffect(() => {
-    fetchCommentsWithContacts();
-  }, [post.id]);
+    if (post && post.id) {
+      fetchCommentsWithContacts(post.id).finally(() => setLoading(false));
+    }
+  }, [post]);
+
 
    if (loading) return <div>Loading comments...</div>;
 
   return (
-    <CommentContext.Provider value={{ commentsWithContacts, getInitials }}>
+    <CommentContext.Provider value={{ commentsWithContacts, post }}>
       <div key={post.id} style={styles.postbox}>
         <div style={styles.header}>
           <div style={styles.initialsCircle}>
@@ -62,6 +42,7 @@ function Post({ post }) {
         </div>
         <p>{post.content}</p>
         <CommentList />
+        <CommentForm/>
       </div>
     </CommentContext.Provider>
   );
