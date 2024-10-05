@@ -3,11 +3,10 @@ import { useContext, useState } from "react";
 import CommentSection from "./CommentSection";
 
 function CommentList() {
-  const { commentsWithContacts, getInitials } = useContext(CommentContext);
-
+  const {getInitials, commentsWithContacts } = useContext(CommentContext);
   const [showAllComments, setShowAllComments] = useState(false);
 
-  const handleToggleComments = () => {
+   const handleToggleComments = () => {
     setShowAllComments((prevShowAll) => !prevShowAll);
   };
 

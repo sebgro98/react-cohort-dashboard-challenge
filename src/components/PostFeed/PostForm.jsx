@@ -4,7 +4,7 @@ import { MyContext } from '../../ApiProvider';
 function PostForm() {
   const { contact, addPost } = useContext(MyContext); 
   
-  const {handlePostSubmit, getInitials} = useContext(PostsContext)
+  const {getInitials} = useContext(PostsContext)
   const [postContent, setPostContent] = useState('');
 
   const handleSubmit = (e) => {

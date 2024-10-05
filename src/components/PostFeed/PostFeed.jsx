@@ -1,13 +1,11 @@
-import { createContext, useContext } from "react";
+import { createContext} from "react";
 import PostList from "./PostList";
 import PostForm from "./PostForm";
-import { MyContext } from "../../ApiProvider";
+
 const PostsContext = createContext();
 
 function PostFeed() {
   
-  const { postsWithContacts, fetchCommentsWithContacts } = useContext(MyContext);
-
   
   const getInitials = (firstName, lastName) => {
     if (!firstName || !lastName) return "";
@@ -16,7 +14,7 @@ function PostFeed() {
 
   return (
     <PostsContext.Provider
-      value={{ postsWithContacts, getInitials, fetchCommentsWithContacts }}
+      value={{getInitials }}
     >
       <PostForm />
       <PostList />

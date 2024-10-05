@@ -1,8 +1,8 @@
 import {Post} from "./Post";
 import { useContext } from "react";
-import { PostsContext } from "./PostFeed";
+import { MyContext } from "../../ApiProvider";
 function PostList() {
-  const { postsWithContacts } = useContext(PostsContext);
+  const { postsWithContacts } = useContext(MyContext);
 
   return (
     <ul>

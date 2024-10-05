@@ -1,8 +1,10 @@
 import { PostsContext } from "../PostFeed/PostFeed";
 import { useContext } from "react";
+import { MyContext } from "../../ApiProvider";
 function CommentSection({ comment }) {
 
   const {getInitials} = useContext(PostsContext)
+
 
   return (
     <div style={styles.commentBox}>

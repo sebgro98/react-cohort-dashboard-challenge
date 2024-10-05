@@ -44,22 +44,20 @@ function ApiProvider({ children }) {
       console.error('Error fetching contact:', error);
     }
   }, []);
+  
 
   const fetchCommentsWithContacts = async (postId) => {
     try {
-      const commentsResponse = await fetch(
-        `https://boolean-uk-api-server.fly.dev/sebgro98/post/${postId}/comment`
-      );
+      console.log("Fetching comments for post ID:", postId)
+      const commentsResponse = await fetch(`https://boolean-uk-api-server.fly.dev/sebgro98/post/${postId}/comment`);
       const comments = await commentsResponse.json();
-
+  
       const contactPromises = comments.map(async (comment) => {
-        const contactResponse = await fetch(
-          `https://boolean-uk-api-server.fly.dev/sebgro98/contact/${comment.contactId}`
-        );
+        const contactResponse = await fetch(`https://boolean-uk-api-server.fly.dev/sebgro98/contact/${comment.contactId}`);
         const contact = await contactResponse.json();
         return { ...comment, contact };
       });
-
+  
       const commentsWithContacts = await Promise.all(contactPromises);
       setCommentsWithContacts(commentsWithContacts);
     } catch (error) {
@@ -69,25 +67,29 @@ function ApiProvider({ children }) {
     }
   };
 
-  const addComment = async (postId, commentContent) => {
-      
-      try {
-        const newComment = { postId: postId, content: commentContent, contactId: contact.id };
+  console.log(commentsWithContacts)
+  
+  const addComment = async (postId, newComment) => {
+    try {
         const response = await fetch(
-          `https://boolean-uk-api-server.fly.dev/sebgro98/post/${postId}/comment`,
-          {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(newComment),
-          }
+            `https://boolean-uk-api-server.fly.dev/sebgro98/post/${postId}/comment`,
+            {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(newComment),
+            }
         );
 
         if (!response.ok) throw new Error("Error saving comment to API");
-      setCommentsWithContacts((prevComments) => [...prevComments, newComment]);
+        
+        
+        return await response.json();
     } catch (error) {
-      console.error("Failed to add comment:", error);
+        console.error("Failed to add comment:", error);
+        throw error;
     }
-  };
+};
+
 
   const addPost = async (newPost) => {
     try {
@@ -127,7 +129,6 @@ function ApiProvider({ children }) {
   useEffect(() => {
     fetchPostsWithContacts();
     fetchContact();
-    fetchCommentsWithContacts()
   }, []);
 
   if(contact)
